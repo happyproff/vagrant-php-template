@@ -1,4 +1,4 @@
-name = "phpplate"
+name = "vagrant-php-template"
 
 Vagrant.configure("2") do |config|
 
