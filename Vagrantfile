@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/trusty64"
   config.vm.network :private_network, type: "dhcp"
-  config.vm.hostname = name + '.dev'
+  config.vm.hostname = name + ".dev"
   config.vm.provider "virtualbox" do |vb|
     vb.name = name
     vb.memory = 256
@@ -14,6 +14,8 @@ Vagrant.configure("2") do |config|
   config.hostmanager.manage_host = true
   config.hostmanager.ignore_private_ip = true
   config.hostmanager.include_offline = true
+
+  # https://github.com/smdahlen/vagrant-hostmanager/issues/63
   config.hostmanager.ip_resolver = proc do |machine|
     result = ""
     machine.communicate.execute("ifconfig eth1") do |type, data|
