@@ -1,0 +1,35 @@
+---
+  - name: Update apt
+    sudo: yes
+    apt:  update_cache=yes
+
+  - name: Install system packages
+    sudo: yes
+    apt:  pkg={{ item }} state=latest
+    with_items:
+      - wget
+      - curl
+      - rsync
+      - mc
+      - htop
+      - iotop
+      - ntp
+      - python-software-properties
+
+  - name: Add ppa repositories
+    sudo: yes
+    apt_repository: repo=ppa:{{ item }}
+    with_items:
+      - mercurial-ppa/releases
+      - git-core/ppa
+
+  - name: Update apt again
+    sudo: yes
+    apt:  update_cache=yes
+
+  - name: Install extra packages
+    sudo: yes
+    apt:  pkg={{ item }} state=latest
+    with_items:
+      - git
+      - mercurial

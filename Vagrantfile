@@ -7,7 +7,9 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = name + ".dev"
   config.vm.provider "virtualbox" do |vb|
     vb.name = name
-    vb.memory = 256
+    vb.memory = 512
+    vb.cpus = 2
+    vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
   end
 
   config.hostmanager.enabled = true
@@ -24,7 +26,8 @@ Vagrant.configure("2") do |config|
     (ip = /^\s*inet .*?(\d+\.\d+\.\d+\.\d+)\s+/.match(result)) && ip[1]
   end
   
+  config.vm.provision :shell, path: "provision/bootstrap.sh"
+
   # config.vm.synced_folder "../data", "/vagrant_data"
-  # config.vm.provision :shell, path: "bootstrap/bootstrap.sh"
 
 end
